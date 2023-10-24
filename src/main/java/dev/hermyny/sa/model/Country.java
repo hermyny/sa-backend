@@ -29,6 +29,8 @@ public class Country {
 	@JoinColumn(name = "continent_id")
 	private Continent continent;
 	
+	
+	
 	public Country() {
 		
 	}

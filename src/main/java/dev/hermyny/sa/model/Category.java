@@ -33,7 +33,13 @@ public class Category {
 	
 	@Column(name = "title")
 	private String title;
-
+	
+	
+	public Category() {
+		
+	}
+	
+	
 	public Category(int id, String title) {
 		super();
 		this.id = id;
@@ -54,6 +60,11 @@ public class Category {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [title=" + title + "]";
 	}
 
 	

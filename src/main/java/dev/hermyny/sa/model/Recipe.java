@@ -199,6 +199,13 @@ public class Recipe {
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Recipe [name=" + name + ", duration=" + duration + ", difficulty=" + difficulty + ", budget=" + budget
+				+ "]";
+	}
 	
 	
 	

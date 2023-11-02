@@ -27,7 +27,7 @@ public class User {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(
 	    name = "user_recipe",
-	    joinColumns = @JoinColumn(name = "user__id"),
+	    joinColumns = @JoinColumn(name = "user_id"),
 	    inverseJoinColumns = @JoinColumn(name = "recipe_id")
 	)
 

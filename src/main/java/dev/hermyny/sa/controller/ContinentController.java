@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Continent;
 import dev.hermyny.sa.service.ContinentService;
 

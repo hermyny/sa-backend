@@ -42,7 +42,6 @@ public class Continent {
 	
 
 	public Continent(int id, String name, List<Country> countries) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.countries = countries;
@@ -72,4 +71,4 @@ public class Continent {
 	
 	
 	
-}
+

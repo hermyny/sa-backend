@@ -1,15 +1,11 @@
 package dev.hermyny.sa.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import dev.hermyny.sa.model.User;
-import dev.hermyny.sa.model.Recipe;
 import dev.hermyny.sa.repository.UserRepository;
 
 

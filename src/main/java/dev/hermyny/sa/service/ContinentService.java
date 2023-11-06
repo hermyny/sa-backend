@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Continent;
 import dev.hermyny.sa.repository.ContinentRepository;
 

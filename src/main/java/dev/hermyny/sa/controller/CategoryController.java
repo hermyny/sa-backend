@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.hermyny.sa.model.Category;
-import dev.hermyny.sa.model.Country;
 import dev.hermyny.sa.service.CategoryService;
 
 @RestController

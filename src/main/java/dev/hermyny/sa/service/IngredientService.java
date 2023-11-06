@@ -1,6 +1,5 @@
 package dev.hermyny.sa.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 
 import dev.hermyny.sa.model.Ingredient;
-import dev.hermyny.sa.model.Recipe;
 import dev.hermyny.sa.repository.IngredientRepository;
 
 @Service

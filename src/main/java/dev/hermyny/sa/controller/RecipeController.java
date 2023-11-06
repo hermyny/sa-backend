@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.hermyny.sa.model.Recipe;
+import dev.hermyny.sa.service.IngredientService;
 import dev.hermyny.sa.service.RecipeService;
 
 
@@ -20,9 +21,11 @@ import dev.hermyny.sa.service.RecipeService;
 @RequestMapping(path ="recipe", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RecipeController {
 	
+	
 	private RecipeService recipeService;
 
 	public RecipeController(RecipeService recipeService) {
+		
 		
 		this.recipeService = recipeService;
 	}
@@ -31,7 +34,6 @@ public class RecipeController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void create(@RequestBody Recipe recipe) {
-		
 		this.recipeService.create(recipe);
 	}
 	

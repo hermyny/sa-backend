@@ -23,7 +23,7 @@ public class Category {
 	
 	@OneToMany(
 			mappedBy = "category" ,
-			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+			cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
 			orphanRemoval = true
 			
 			)
@@ -62,10 +62,13 @@ public class Category {
 		this.title = title;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Category [title=" + title + "]";
+		return "Category [id=" + id + ", recipes=" + recipes + ", title=" + title + "]";
 	}
+
+	
 
 	
 	

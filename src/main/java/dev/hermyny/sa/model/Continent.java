@@ -26,11 +26,10 @@ public class Continent {
 	
 	@OneToMany(
 			mappedBy = "continent" ,
-			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+			cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
 			orphanRemoval = true
 			
 			)
-	
 	List<Country> countries = new ArrayList<>();
 	
 	
@@ -40,10 +39,16 @@ public class Continent {
 		
 	}
 
-	public Continent(int id, String name) {
+	
+
+	public Continent(int id, String name, List<Country> countries) {
+		super();
 		this.id = id;
 		this.name = name;
+		this.countries = countries;
 	}
+
+
 
 	public int getId() {
 		return id;
@@ -60,11 +65,10 @@ public class Continent {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	@Override
-	public String toString() {
-		return "Continent [name=" + name + "]";
-	}
+	
+	
+	
+}
 	
 	
 	

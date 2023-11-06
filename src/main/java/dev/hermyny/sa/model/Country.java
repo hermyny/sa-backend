@@ -1,5 +1,8 @@
 package dev.hermyny.sa.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +27,16 @@ public class Country {
 	private String name;
 	
 	
+	@OneToMany(
+			mappedBy = "country" ,
+			cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+			orphanRemoval = true
+			
+			)
+	List<Recipe> recipes = new ArrayList<>();
+	
+	
+	
 	@ManyToOne(
 			cascade = {CascadeType.PERSIST, CascadeType.MERGE}
 			)
@@ -35,14 +49,20 @@ public class Country {
 		
 	}
 	
-	
 
-	public Country(int id, String name, Continent continent) {
-		
+
+
+	public Country(int id, String name, List<Recipe> recipes, Continent continent) {
+		super();
 		this.id = id;
 		this.name = name;
+		this.recipes = recipes;
 		this.continent = continent;
 	}
+
+
+
+
 
 
 
@@ -72,10 +92,15 @@ public class Country {
 
 
 
+
 	@Override
 	public String toString() {
-		return "Country [name=" + name + "]";
+		return "Country [id=" + id + ", name=" + name + ", recipes=" + recipes + ", continent=" + continent + "]";
 	}
+
+
+
+	
 	
 	
 }

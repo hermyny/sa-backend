@@ -105,12 +105,20 @@ public class Recipe {
 		return ingredients;
 	}
 
-
+	 
+	public void addIngredient(Ingredient ingredient) {
+		ingredients.add(ingredient);
+		ingredient.getRecipes().add(this);
+		
+	}
+	
+	
 	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
 
 
+	
 	public List<User> getUsers() {
 		return users;
 	}
@@ -203,9 +211,13 @@ public class Recipe {
 
 	@Override
 	public String toString() {
-		return "Recipe [name=" + name + ", duration=" + duration + ", difficulty=" + difficulty + ", budget=" + budget
-				+ "]";
+		return "Recipe [id=" + id + ", ingredients=" + ingredients + ", users=" + users + ", country=" + country
+				+ ", category=" + category + ", name=" + name + ", preparation=" + preparation + ", duration="
+				+ duration + ", difficulty=" + difficulty + ", budget=" + budget + ", image=" + image + "]";
 	}
+
+
+	
 	
 	
 	

@@ -35,9 +35,11 @@ public class CountryService {
 		
 	}	
 	
+	
 	public List<Country> search(){
 		return this.countryRepository.findAll();
 	}
+	
 	
 	public Country read(int id) {
 		Optional<Country> optionalCountry = this.countryRepository.findById(id);
@@ -46,6 +48,19 @@ public class CountryService {
 		
 		}
 		return null;
+		
+	}
+	
+	
+	
+	public Country readOrCreate(Country countryToAdd) {
+		Country countryInBdd = this.countryRepository.findByName(countryToAdd.getName());
+		if(countryInBdd == null ) {
+		countryInBdd = this.countryRepository.save(countryToAdd);
+	
+		}
+		
+		return countryInBdd;
 		
 	}
 }

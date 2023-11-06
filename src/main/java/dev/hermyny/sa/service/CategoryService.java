@@ -1,9 +1,12 @@
 package dev.hermyny.sa.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+
 import dev.hermyny.sa.model.Category;
+import dev.hermyny.sa.model.Country;
 import dev.hermyny.sa.repository.CategoryRepository;
 
 
@@ -21,6 +24,7 @@ public class CategoryService {
 	}
 	
 	
+	
 	public void create(Category category) {
 		
 		Category categoryInBdd = this.categoryRepository.findByTitle(category.getTitle());
@@ -30,8 +34,21 @@ public class CategoryService {
 	 }
 	
 	
-    public List<Category> search() { return this.categoryRepository.findAll(); }
 	
+    public List<Category> search() { 
+    	return this.categoryRepository.findAll(); 
+    	}
+	
+    
+    public Category getCategoryById(int id) {
+		Optional<Category> optionalCategory = this.categoryRepository.findById(id);
+		if(optionalCategory.isPresent()) {
+			return optionalCategory.orElse(null);
+		
+		}
+		return null;
+		
+	}
 	
 	public Category readOrCreate(Category categoryToAdd) {
 		Category categoryInBdd = this.categoryRepository.findByTitle(categoryToAdd.getTitle());
@@ -43,5 +60,26 @@ public class CategoryService {
 		return categoryInBdd;
 		
 	}
+	
+	public void deleteCategory(int id) {
+	   Category category = categoryRepository.findById(id).orElse(null);
+	   if (category != null) {
+		   this.categoryRepository.delete(category);
+	   } else {
+		   throw new RuntimeException("La categorie numéro" + id + " est introuvable");
+	   }
+	}
+	
+	
+	public void editCategory(Category category) {
+		Category categoryExisting = categoryRepository.findById(category.getId()).orElse(null);
+		if(categoryExisting != null ) {
+			this.categoryRepository.save(category);
+			}
+		 }
+	
+	
+	
 
-}
+	}
+

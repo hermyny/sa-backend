@@ -1,21 +1,30 @@
 package dev.hermyny.sa.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import dev.hermyny.sa.model.User;
+import dev.hermyny.sa.model.Recipe;
 import dev.hermyny.sa.repository.UserRepository;
+
 
 @Service
 public class UserService { 
 	
 	private UserRepository userRepository;
+	private RecipeService recipeService;
 	
 	
-	public UserService(UserRepository userRepository) {
+
+	public UserService(UserRepository userRepository, RecipeService recipeService) {
+		
 		this.userRepository = userRepository;
+		this.recipeService = recipeService;
 	}
 
 
@@ -40,4 +49,9 @@ public class UserService {
 		}
 		return null;
 	}
+	
+	
+	
+	
 }
+

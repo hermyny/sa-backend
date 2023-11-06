@@ -1,6 +1,7 @@
 package dev.hermyny.sa.repository;
 
-import java.util.List;
+
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,9 +15,8 @@ public interface RecipeRepository extends JpaRepository<Recipe, Integer>{
 	
 	Recipe findByDifficulty(String difficulty);
 	
-	List<Recipe> findByCountry(Integer country_id);
 	
-	List<Recipe> findByCategory(Integer category_id);
+	
 	
 	
 }

@@ -39,7 +39,7 @@ public class CategoryService {
     	}
 	
     
-    public Category getCategoryById(int id) {
+    public Category readOrCreateById(int id) {
 		Optional<Category> optionalCategory = this.categoryRepository.findById(id);
 		if(optionalCategory.isPresent()) {
 			return optionalCategory.orElse(null);
@@ -63,19 +63,22 @@ public class CategoryService {
 	public void deleteCategory(int id) {
 	   Category category = categoryRepository.findById(id).orElse(null);
 	   if (category != null) {
-		   this.categoryRepository.delete(category);
+		   this.categoryRepository.deleteById(id);
 	   } else {
 		   throw new RuntimeException("La categorie numéro" + id + " est introuvable");
 	   }
 	}
 	
 	
-	public void editCategory(Category category) {
-		Category categoryExisting = categoryRepository.findById(category.getId()).orElse(null);
-		if(categoryExisting != null ) {
-			this.categoryRepository.save(category);
-			}
-		 }
+
+	public void updateCategory(int id, Category category) {
+		Category categoryInBdd = this.readOrCreateById(id);
+		if (categoryInBdd.getId() != category.getId()) {
+			categoryInBdd.setTitle(category.getTitle());
+			this.categoryRepository.save(categoryInBdd);
+		}
+			
+	}
 	
 	
 	

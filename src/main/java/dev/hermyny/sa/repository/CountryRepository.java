@@ -8,4 +8,6 @@ public interface CountryRepository extends JpaRepository<Country, Integer> {
 
 	
 	Country findByName(String name);
+	
+	
 }

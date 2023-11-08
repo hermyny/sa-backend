@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,10 +44,17 @@ public class IngredientController {
 	
 	
 	@GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Ingredient read(@PathVariable int id) {
-		return this.ingredientService.read(id);
+	public Ingredient readOrCreateById(@PathVariable int id) {
+		return this.ingredientService.readOrCreateById(id);
 		
 	}
 	
+	
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	@DeleteMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteIngredient(@PathVariable int id) {
+		
+		this.ingredientService.deleteIngredient(id);
+	}
 	
 }

@@ -3,8 +3,13 @@ package dev.hermyny.sa.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Continent;
 import dev.hermyny.sa.model.Country;
 
@@ -41,7 +46,7 @@ public class CountryService {
 	}
 	
 	
-	public Country read(int id) {
+	public Country readOrCreateById(int id) {
 		Optional<Country> optionalCountry = this.countryRepository.findById(id);
 		if(optionalCountry.isPresent()) {
 			return optionalCountry.orElse(null);
@@ -63,4 +68,30 @@ public class CountryService {
 		return countryInBdd;
 		
 	}
+	
+	public void deleteCountry(int id) {
+		Country country = countryRepository.findById(id).orElse(null);
+		   if (country != null) {
+			   this.countryRepository.deleteById(id);
+		   } else {
+			   throw new RuntimeException("Le pays numéro" + id + " est introuvable");
+		   }
+		}
+	
+	
+	public void updateCountry(int id, Country country) {
+		Country countryInBdd = this.readOrCreateById(id);
+		Continent continent = this.continentService.readOrCreate(countryInBdd.getContinent());
+
+		if (countryInBdd.getId() != country.getId()) {
+			countryInBdd.setName(country.getName());
+			countryInBdd.setContinent(continent);
+			
+			this.countryRepository.save(countryInBdd);
+		}
+			
+	}
+	
 }
+
+

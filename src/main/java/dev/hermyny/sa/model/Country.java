@@ -29,7 +29,7 @@ public class Country {
 	
 	@OneToMany(
 			mappedBy = "country" ,
-			cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE},
+			cascade = {CascadeType.PERSIST, CascadeType.MERGE},
 			orphanRemoval = true
 			
 			)
@@ -97,6 +97,9 @@ public class Country {
 	public String toString() {
 		return "Country [id=" + id + ", name=" + name + ", recipes=" + recipes + ", continent=" + continent + "]";
 	}
+
+
+	
 
 
 

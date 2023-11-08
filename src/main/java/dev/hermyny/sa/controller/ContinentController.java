@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Continent;
 import dev.hermyny.sa.service.ContinentService;
 
@@ -42,8 +43,8 @@ public class ContinentController {
 	 
 	 
 	 @GetMapping(path = "read/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-		public Continent read(@PathVariable int id) {
-			return this.continentService.getContinentById(id);
+		public Continent readOrCreateById(@PathVariable int id) {
+			return this.continentService.readOrCreateById(id);
 			
 		}
 	 
@@ -54,11 +55,11 @@ public class ContinentController {
 	}
 	
 
-    @ResponseStatus(value = HttpStatus.CREATED)
-    @PutMapping(path = "edit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void editContinent(@RequestBody Continent continent) {
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
+    @PutMapping(path = "update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateContinent(@PathVariable int id, @RequestBody Continent continent) {
     	
-    	this.continentService.editContinent(continent);
-    }
-}
+    	this.continentService.updateContinent(id, continent);
+    		}
+	}
 

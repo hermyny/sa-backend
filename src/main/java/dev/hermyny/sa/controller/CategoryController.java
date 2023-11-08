@@ -37,6 +37,8 @@ public class CategoryController {
 	}
     
     
+   
+    
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Category> search() {
 		return this.categoryService.search();
@@ -45,8 +47,8 @@ public class CategoryController {
     
     
     @GetMapping(path = "read/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Category read(@PathVariable int id) {
-		return this.categoryService.getCategoryById(id);
+	public Category readOrCreateById(@PathVariable int id) {
+		return this.categoryService.readOrCreateById(id);
 		
 	}
     
@@ -60,11 +62,11 @@ public class CategoryController {
 	}
     
     
-    @ResponseStatus(value = HttpStatus.CREATED)
-    @PutMapping(path = "edit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void editCategory(@RequestBody Category category) {
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    @PutMapping(path = "update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateCategory(@PathVariable int id, @RequestBody Category category) {
     	
-    	this.categoryService.editCategory(category);
+    	this.categoryService.updateCategory(id, category);
     }
     
     

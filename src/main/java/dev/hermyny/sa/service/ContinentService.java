@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Continent;
 import dev.hermyny.sa.repository.ContinentRepository;
 
@@ -34,7 +35,7 @@ public class ContinentService {
 		}
 	
 	
-	 public Continent getContinentById(int id) {
+	 public Continent readOrCreateById(int id) {
 			Optional<Continent> optionalContinent = this.continentRepository.findById(id);
 			if(optionalContinent.isPresent()) {
 				return optionalContinent.orElse(null);
@@ -57,20 +58,23 @@ public class ContinentService {
 	
 	
 	public void deleteContinent(int id) {
-		Continent continent = continentRepository.findById(id).orElse(null);
+		   Continent continent = continentRepository.findById(id).orElse(null);
 		   if (continent != null) {
-			   this.continentRepository.delete(continent);
+			   this.continentRepository.deleteById(id);
 		   } else {
-			   throw new RuntimeException("Le continent numéro" + id + " est introuvable");
+			   throw new RuntimeException("La categorie numéro" + id + " est introuvable");
 		   }
 		}
+		
 	
 	
-	public void editContinent(Continent continent) {
-		Continent continentExisting = continentRepository.findById(continent.getId()).orElse(null);
-		if(continentExisting != null ) {
-			this.continentRepository.save(continent);
-			}
-		 }
+	public void updateContinent(int id, Continent continent) {
+		Continent continentInBdd = this.readOrCreateById(id);
+		if (continentInBdd.getId() != continent.getId()) {
+			continentInBdd.setName(continent.getName());
+			this.continentRepository.save(continentInBdd);
+		}
+			
+	}
 		
 }

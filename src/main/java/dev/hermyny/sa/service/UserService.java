@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import dev.hermyny.sa.model.Recipe;
 import dev.hermyny.sa.model.User;
 import dev.hermyny.sa.repository.UserRepository;
 
@@ -37,7 +38,7 @@ public class UserService {
 	}
 	
 	
-	public User read(int id) {
+	public User readOrCreateById(int id) {
 		Optional<User> optionalClient = this.userRepository.findById(id);
 		if(optionalClient.isPresent()) {
 			return optionalClient.orElse(null);
@@ -45,6 +46,18 @@ public class UserService {
 		}
 		return null;
 	}
+	
+	public void deleteUser(int id) {
+		User user = userRepository.findById(id).orElse(null);
+		   if (user != null) {
+			   this.userRepository.deleteById(id);
+		   } else {
+			   throw new RuntimeException("Le pays numéro" + id + " est introuvable");
+		   }
+		}
+
+
+	
 	
 	
 	

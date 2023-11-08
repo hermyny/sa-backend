@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Country;
+import dev.hermyny.sa.model.Ingredient;
 import dev.hermyny.sa.model.Recipe;
 import dev.hermyny.sa.repository.RecipeRepository;
 
@@ -40,8 +41,9 @@ public class RecipeService {
 		recipe.setCountry(country);
 //		recipe.setIngredients(ingredient);
 		
+		
 	  this.recipeRepository.save(recipe);
-
+	  System.out.println("recipe :");
 		System.out.println(recipe);
 		
 	}	
@@ -50,7 +52,7 @@ public class RecipeService {
 		return this.recipeRepository.findAll();
 	}
 	
-	public Recipe read(int id) {
+	public Recipe readOrCreateById(int id) {
 		Optional<Recipe> optionalRecipe = this.recipeRepository.findById(id);
 		if(optionalRecipe.isPresent()) {
 			return optionalRecipe.orElse(null);
@@ -58,6 +60,18 @@ public class RecipeService {
 		}
 		return null;
 	}
+	
+	
+
+
+	public void deleteRecipe(int id) {
+		Recipe recipe = recipeRepository.findById(id).orElse(null);
+		   if (recipe != null) {
+			   this.recipeRepository.deleteById(id);
+		   } else {
+			   throw new RuntimeException("Le pays numéro" + id + " est introuvable");
+		   }
+		}
 	
 	
 }

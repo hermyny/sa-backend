@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-
+import dev.hermyny.sa.model.Country;
 import dev.hermyny.sa.model.Ingredient;
 import dev.hermyny.sa.repository.IngredientRepository;
 
@@ -34,7 +34,7 @@ public class IngredientService {
 		return this.ingredientRepository.findAll();
 	}
 	
-	public Ingredient read(int id) {
+	public Ingredient readOrCreateById(int id) {
 		Optional<Ingredient> optionalIngredient = this.ingredientRepository.findById(id);
 		if(optionalIngredient.isPresent()) {
 			return optionalIngredient.orElse(null);
@@ -53,6 +53,17 @@ public class IngredientService {
 		return ingredientInBdd;
 		
 	}
+
+
+	
+	public void deleteIngredient(int id) {
+		Ingredient ingredient = ingredientRepository.findById(id).orElse(null);
+		   if (ingredient != null) {
+			   this.ingredientRepository.deleteById(id);
+		   } else {
+			   throw new RuntimeException("Le pays numéro" + id + " est introuvable");
+		   }
+		}
 	
 	
 //	public List<Ingredient> createListByRecipe(List<Ingredient> ingredientsToAdd) {

@@ -25,16 +25,17 @@ public class UserService {
 	private UserRepository userRepository;
 	private BCryptPasswordEncoder passwordEncoder;
 	private RecipeService recipeService;
+	private ValidationService validationService;
 	
 	
 	
 
-	public UserService(UserRepository userRepository,BCryptPasswordEncoder passwordEncoder, RecipeService recipeService) {
+	public UserService(UserRepository userRepository,ValidationService validationService, BCryptPasswordEncoder passwordEncoder, RecipeService recipeService) {
 		
 		this.userRepository = userRepository;
 		this.recipeService = recipeService;
 		this. passwordEncoder = passwordEncoder;
-		
+		this.validationService  = validationService;
 	}
 	
 	
@@ -55,8 +56,8 @@ public class UserService {
 		
 		String password = this.passwordEncoder.encode(user.getPassword());
 		user.setPassword(password);
-		this.userRepository.save(user);
-		
+		user = this.userRepository.save(user);
+		this.validationService.registrate(user);
 	}
 	 
 	 

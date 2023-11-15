@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Ingredient;
 import dev.hermyny.sa.service.IngredientService;
 
@@ -36,14 +39,14 @@ public class IngredientController {
 	}
 	
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping( path = "read", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Ingredient> search() {
 		return this.ingredientService.search();
 		
 	}
 	
 	
-	@GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "read/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Ingredient readOrCreateById(@PathVariable int id) {
 		return this.ingredientService.readOrCreateById(id);
 		
@@ -56,5 +59,13 @@ public class IngredientController {
 		
 		this.ingredientService.deleteIngredient(id);
 	}
+	
+	
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
+    @PutMapping(path = "update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void ingredientCategory(@PathVariable int id, @RequestBody Ingredient ingredient) {
+    	
+    	this.ingredientService.updateIngredient(id, ingredient);
+    }
 	
 }

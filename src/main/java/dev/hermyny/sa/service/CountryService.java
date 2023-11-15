@@ -3,13 +3,8 @@ package dev.hermyny.sa.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Continent;
 import dev.hermyny.sa.model.Country;
 
@@ -69,6 +64,7 @@ public class CountryService {
 		
 	}
 	
+	
 	public void deleteCountry(int id) {
 		Country country = countryRepository.findById(id).orElse(null);
 		   if (country != null) {
@@ -79,17 +75,17 @@ public class CountryService {
 		}
 	
 	
-	public void updateCountry(int id, Country country) {
-		Country countryInBdd = this.readOrCreateById(id);
-		Continent continent = this.continentService.readOrCreate(countryInBdd.getContinent());
 
-		if (countryInBdd.getId() != country.getId()) {
-			countryInBdd.setName(country.getName());
-			countryInBdd.setContinent(continent);
-			
-			this.countryRepository.save(countryInBdd);
-		}
-			
+	
+	public void updateCountry(int id, Country updatedCountry) {
+	    Country countryInBdd = this.readOrCreateById(id);
+	    countryInBdd.setName(updatedCountry.getName());
+
+	    Continent continent = updatedCountry.getContinent();
+	    if (continent != null) {
+	        countryInBdd.setContinent(continent);
+	    }
+	    this.countryRepository.save(countryInBdd);
 	}
 	
 }

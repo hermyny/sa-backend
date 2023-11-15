@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Country;
 import dev.hermyny.sa.model.Ingredient;
 import dev.hermyny.sa.repository.IngredientRepository;
@@ -63,38 +64,23 @@ public class IngredientService {
 		   } else {
 			   throw new RuntimeException("Le pays numéro" + id + " est introuvable");
 		   }
+	}
+	
+	
+	
+	
+	public void updateIngredient(int id, Ingredient ingredient) {
+		Ingredient ingredientInBdd = this.readOrCreateById(id);
+		if (ingredientInBdd.getId() != ingredient.getId()) {
+			ingredientInBdd.setName(ingredient.getName());
+			ingredientInBdd.setCalorie(ingredient.getCalorie());
+			ingredientInBdd.setQuantity(ingredient.getQuantity());
+			ingredientInBdd.setPrice(ingredient.getPrice());
+			ingredientInBdd.setType(ingredient.getType());
+
+
+			this.ingredientRepository.save(ingredientInBdd);
 		}
-	
-	
-//	public List<Ingredient> createListByRecipe(List<Ingredient> ingredientsToAdd) {
-//	    List<Ingredient> resultIngredients = new ArrayList<>();
-//
-//	    for (Ingredient ingredientToAdd : ingredientsToAdd) {
-//	        Ingredient ingredientInBdd = this.ingredientRepository.findByName(ingredientToAdd.getName());
-//
-//	        if (ingredientInBdd == null) {
-//	            resultIngredients.add(ingredientToAdd);
-//	        } else {
-//	            resultIngredients.add(ingredientInBdd);
-//	        }
-//	    }
-//	    	
-//	    return resultIngredients;
-//	}
-//	
-
-
-
-
-//	public List<Ingredient> createListByRecipe(){
-//		
-//		List<Ingredient> ingredients = new ArrayList<>();
-//		Ingredient createdIngredient = this.ingredientService.readOrCreate();
-//		 for (Ingredient ingredient : recipe.getIngredients()) {
-//		        
-//			 	ingredients.add(createdIngredient);
-//		        
-//		        System.out.println(createdIngredient);
-//		    }
-//	}
+			
+	}
 }

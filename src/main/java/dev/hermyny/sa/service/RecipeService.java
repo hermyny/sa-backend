@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import dev.hermyny.sa.model.Category;
+import dev.hermyny.sa.model.Continent;
 import dev.hermyny.sa.model.Country;
 import dev.hermyny.sa.model.Ingredient;
 import dev.hermyny.sa.model.Recipe;
@@ -43,8 +44,7 @@ public class RecipeService {
 		
 		
 	  this.recipeRepository.save(recipe);
-	  System.out.println("recipe :");
-		System.out.println(recipe);
+	  
 		
 	}	
 	
@@ -62,6 +62,29 @@ public class RecipeService {
 	}
 	
 	
+	
+	public void updateRecipe(int id, Recipe recipe) {
+		Recipe recipeInBdd = this.readOrCreateById(id);
+			recipeInBdd.setName(recipe.getName());
+			recipeInBdd.setDifficulty(recipe.getDifficulty());
+			recipeInBdd.setDuration(recipe.getDuration());
+			recipeInBdd.setBudget(recipe.getBudget());
+			recipeInBdd.setImage(recipe.getImage());
+			recipeInBdd.setPreparation(recipe.getPreparation());
+			
+		Country country = recipe.getCountry();
+		Category category = recipe.getCategory();
+			if (country != null && category != null) {
+				
+				recipeInBdd.setCountry(country);
+				recipeInBdd.setCategory(category);
+				
+			}
+			recipeRepository.save(recipeInBdd);
+		
+	
+			
+	}
 
 
 	public void deleteRecipe(int id) {

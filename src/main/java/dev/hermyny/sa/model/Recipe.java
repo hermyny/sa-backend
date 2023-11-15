@@ -24,6 +24,26 @@ public class Recipe {
 	private int id;
 	
 	
+	
+	
+	@Column
+	private String name;
+	
+	@Column
+	private String preparation;
+	
+	@Column
+	private String duration;
+	
+	@Column
+	private String difficulty;
+	
+	@Column
+	private String budget;
+	
+	@Column
+	private String image;
+	
 	@ManyToMany( mappedBy = "recipes")
 	private List<Ingredient> ingredients = new ArrayList<>();
 	
@@ -49,46 +69,32 @@ public class Recipe {
 	private Category category;
 	
 	
-	
-	@Column
-	private String name;
-	
-	@Column
-	private String preparation;
-	
-	@Column
-	private String duration;
-	
-	@Column
-	private String difficulty;
-	
-	@Column
-	private String budget;
-	
-	@Column
-	private String image;
-	
-	
 	public Recipe() {
 		
 	}
 
 
-	public Recipe(int id, List<Ingredient> ingredients, List<User> users, Country country, Category category,
-			String name, String preparation, String duration, String difficulty, String budget, String image) {
-		
+	
+
+
+	public Recipe(int id, String name, String preparation, String duration, String difficulty, String budget,
+			String image, List<Ingredient> ingredients, List<User> users, Country country, Category category) {
+		super();
 		this.id = id;
-		this.ingredients = ingredients;
-		this.users = users;
-		this.country = country;
-		this.category = category;
 		this.name = name;
 		this.preparation = preparation;
 		this.duration = duration;
 		this.difficulty = difficulty;
 		this.budget = budget;
 		this.image = image;
+		this.ingredients = ingredients;
+		this.users = users;
+		this.country = country;
+		this.category = category;
 	}
+
+
+
 
 
 	public int getId() {
@@ -209,12 +215,18 @@ public class Recipe {
 	}
 
 
+
+
+
 	@Override
 	public String toString() {
-		return "Recipe [id=" + id + ", ingredients=" + ingredients + ", users=" + users + ", country=" + country
-				+ ", category=" + category + ", name=" + name + ", preparation=" + preparation + ", duration="
-				+ duration + ", difficulty=" + difficulty + ", budget=" + budget + ", image=" + image + "]";
+		return "Recipe [id=" + id + ", name=" + name + ", preparation=" + preparation + ", duration=" + duration
+				+ ", difficulty=" + difficulty + ", budget=" + budget + ", image=" + image + ", ingredients="
+				+ ingredients + ", users=" + users + ", country=" + country + ", category=" + category + "]";
 	}
+
+
+	
 
 
 	

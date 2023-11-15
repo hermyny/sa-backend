@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.hermyny.sa.model.Ingredient;
 import dev.hermyny.sa.model.Recipe;
 import dev.hermyny.sa.service.RecipeService;
 
@@ -32,7 +34,7 @@ public class RecipeController {
 	
 	
 	@ResponseStatus(value = HttpStatus.CREATED)
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "create", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void create(@RequestBody Recipe recipe) {
 		this.recipeService.create(recipe);
 	}
@@ -50,7 +52,18 @@ public class RecipeController {
 		return this.recipeService.readOrCreateById(id);
 		
 	}
+	
+	
+	
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
+    @PutMapping(path = "update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateRecipe(@PathVariable int id, @RequestBody Recipe recipe) {
+    	
+    	this.recipeService.updateRecipe(id, recipe);
+    }
 
+	
+	
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	@DeleteMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public void deleteRecipe(@PathVariable int id) {

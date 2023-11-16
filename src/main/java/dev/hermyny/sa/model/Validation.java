@@ -16,11 +16,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+//@Getter
+//@Setter
+//@Entity
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "validation")
 public class Validation {
 	@Id
@@ -35,6 +36,54 @@ public class Validation {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private User user;
-	
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Instant getCreation() {
+		return creation;
+	}
+
+	public void setCreation(Instant creation) {
+		this.creation = creation;
+	}
+
+	public Instant getExpire() {
+		return expire;
+	}
+
+	public void setExpire(Instant expire) {
+		this.expire = expire;
+	}
+
+	public Instant getActivation() {
+		return activation;
+	}
+
+	public void setActivation(Instant activation) {
+		this.activation = activation;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
 }

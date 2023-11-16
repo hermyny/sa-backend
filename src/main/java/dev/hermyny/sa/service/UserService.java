@@ -1,6 +1,8 @@
 package dev.hermyny.sa.service;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +17,7 @@ import dev.hermyny.sa.model.Country;
 import dev.hermyny.sa.model.Recipe;
 import dev.hermyny.sa.model.Role;
 import dev.hermyny.sa.model.User;
+import dev.hermyny.sa.model.Validation;
 import dev.hermyny.sa.repository.UserRepository;
 
 
@@ -99,6 +102,22 @@ public class UserService {
 			   throw new RuntimeException("Le pays numéro" + id + " est introuvable");
 		   }
 		}
+
+
+	public void activation(Map<String, String> activation) {
+		Validation validation = this.validationService.readByCode(activation.get("code"));
+		if(Instant.now().isAfter(validation.getExpire())) {
+			
+			throw new RuntimeException("Votre code a expiré");
+		}
+		
+		
+		User userActive = this.userRepository.findById(validation.getUser().getId())
+			    .orElseThrow(() -> new RuntimeException("Utilisateur inconnu"));
+		userActive.setActive(true);
+		this.userRepository.save(userActive);
+		
+	}
 
 
 	

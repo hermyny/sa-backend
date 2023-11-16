@@ -1,6 +1,7 @@
 package dev.hermyny.sa.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,6 +40,14 @@ public class UserController {
 	@PostMapping(path = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void create(@RequestBody User user) {
 		this.userService.create(user);
+		
+	}
+	
+	
+	@ResponseStatus(value = HttpStatus.CREATED)
+	@PostMapping(path = "activation", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void activate(@RequestBody Map<String,String> activation) {
+		this.userService.activation(activation);
 		
 	}
 	

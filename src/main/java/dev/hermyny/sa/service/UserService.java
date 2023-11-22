@@ -4,17 +4,14 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import dev.hermyny.sa.RoleType;
-import dev.hermyny.sa.model.Category;
-import dev.hermyny.sa.model.Continent;
-import dev.hermyny.sa.model.Country;
-import dev.hermyny.sa.model.Recipe;
 import dev.hermyny.sa.model.Role;
 import dev.hermyny.sa.model.User;
 import dev.hermyny.sa.model.Validation;
@@ -23,7 +20,7 @@ import dev.hermyny.sa.repository.UserRepository;
 
 
 @Service
-public class UserService { 
+public class UserService  implements UserDetailsService{ 
 	
 	private UserRepository userRepository;
 	private BCryptPasswordEncoder passwordEncoder;
@@ -31,17 +28,19 @@ public class UserService {
 	private ValidationService validationService;
 	
 	
-	
 
-	public UserService(UserRepository userRepository,ValidationService validationService, BCryptPasswordEncoder passwordEncoder, RecipeService recipeService) {
-		
+	
+	public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,
+			RecipeService recipeService, ValidationService validationService) {
+		super();
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 		this.recipeService = recipeService;
-		this. passwordEncoder = passwordEncoder;
-		this.validationService  = validationService;
+		this.validationService = validationService;
 	}
-	
-	
+
+
+
 	public void create(User user) {
 		if(!user.getEmail().contains("@")) {
 			throw new RuntimeException("Votre email est invalide");
@@ -53,12 +52,14 @@ public class UserService {
 		if(userOptional.isPresent()) {
 			throw new RuntimeException("Votre email est déja utilisé. Veuillez en changer.");
 		}
+		
 		Role roleUser = new Role();
 		roleUser.setName(RoleType.VISITOR);
 		user.setRole(roleUser);
 		
 		String password = this.passwordEncoder.encode(user.getPassword());
 		user.setPassword(password);
+		user.setPseudo(user.getPseudo());
 		user = this.userRepository.save(user);
 		this.validationService.registrate(user);
 	}
@@ -120,10 +121,10 @@ public class UserService {
 	}
 
 
-	
-	
-	
-	
-	
-}
-
+	  @Override
+	    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+	        return this.userRepository
+	                .findByEmail(username)
+	                .orElseThrow(() -> new  UsernameNotFoundException("Aucun utilisateur ne corespond à cet identifiant"));
+	    }
+	}

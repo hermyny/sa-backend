@@ -19,8 +19,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -62,7 +60,7 @@ public class User implements UserDetails{
 	private String name;
 	
 	
-	@Column
+	@Column(unique = true)
 	private String pseudo;
 	
 	@Column(unique = true)
@@ -83,108 +81,6 @@ public class User implements UserDetails{
 
 
 
-	public int getId() {
-		return id;
-	}
-
-
-
-
-	public List<Recipe> getRecipes() {
-		return recipes;
-	}
-
-
-
-
-	public String getName() {
-		return name;
-	}
-
-
-
-
-	public String getPseudo() {
-		return pseudo;
-	}
-
-
-
-
-	public String getEmail() {
-		return email;
-	}
-	
-
-
-
-	@Override
-	public String getPassword() {
-		return password;
-	}
-
-
-
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-
-
-
-	
-
-
-	
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
-
-
-	public void setRecipes(List<Recipe> recipes) {
-		this.recipes = recipes;
-	}
-
-
-	
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-
-
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
-	}
-
-
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-	
-	
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-
 
 
 
@@ -193,8 +89,11 @@ public class User implements UserDetails{
 		return Collections.singletonList(new SimpleGrantedAuthority("ROLE_"+this.role.getName()));
 	}
 
-
-
+	
+	@Override
+    public String getPassword() {
+        return this.password;
+    }
 
 	@Override
 	public String getUsername() {
@@ -226,7 +125,7 @@ public class User implements UserDetails{
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return this.isActive;
 	}
 
 
@@ -235,7 +134,7 @@ public class User implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return this.isActive;
 	}
 
 
@@ -244,11 +143,6 @@ public class User implements UserDetails{
 
 
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", recipes=" + recipes + ", name=" + name + ", pseudo=" + pseudo + ", email=" + email
-				+ ", password=" + password + ", isActive=" + isActive + ", role=" + role + "]";
-	}
 
 
 	

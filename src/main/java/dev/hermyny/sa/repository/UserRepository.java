@@ -10,7 +10,11 @@ import dev.hermyny.sa.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 	
-	Optional<User>  findByEmail(String email);
+	Optional<User> findByEmail(String email);
+	
+	
+	
+
 
 //	Optional<User> findByPseudo(String pseudo);
 	

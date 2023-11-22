@@ -3,9 +3,13 @@ package dev.hermyny.sa.controller;
 import java.util.List;
 import java.util.Map;
 
+//import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.hermyny.sa.dto.AuthenticationDTO;
+import dev.hermyny.sa.dto.AuthenticationDTO;
 import dev.hermyny.sa.model.User;
+import dev.hermyny.sa.securite.JwtService;
 import dev.hermyny.sa.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +31,20 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping(path = "user" , consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/" , consumes = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 	
+	
+	private AuthenticationManager authenticationManager;
 	private UserService userService;
+	private JwtService jwtService;
 	
 	
-	public UserController(UserService userService) {
+	public UserController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService) {
 		this.userService = userService;
+		this.authenticationManager = authenticationManager;
+		this.jwtService = jwtService;
+
 	}
 
 
@@ -40,7 +53,7 @@ public class UserController {
 	@PostMapping(path = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void create(@RequestBody User user) {
 		this.userService.create(user);
-		
+		System.out.println("Hello, World!");
 	}
 	
 	
@@ -57,7 +70,7 @@ public class UserController {
 		
 	}
 	
-	
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@GetMapping(path = "read/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public User readOrCreateById(@PathVariable int id) {
 		return this.userService.readOrCreateById(id);
@@ -80,7 +93,19 @@ public class UserController {
 		this.userService.deleteUser(id);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@PostMapping(path = "connection", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, String> connect(@RequestBody AuthenticationDTO authenticationDTO){
+		  Authentication authenticate = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(authenticationDTO.username(), authenticationDTO.password())
+		);
+		 
+		  if(authenticate.isAuthenticated()) {
+	            return this.jwtService.generate(authenticationDTO.username());
+	        }
+	        return null;
+	    }
+	}
 	
 	
-	
-}
+

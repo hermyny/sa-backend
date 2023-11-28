@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
-import dev.hermyny.sa.model.User;
 import dev.hermyny.sa.service.UserService;
 
 import java.io.IOException;
@@ -19,17 +18,18 @@ import java.io.IOException;
 @Service
 public class JwtFilter extends OncePerRequestFilter{
 	
-	private UserService userService;
-	private JwtService jwtService;
+	private  JwtService jwtService;
+    private UserService userService;
+
+    public JwtFilter(JwtService jwtService, UserService userService) {
+        this.jwtService = jwtService;
+        this.userService = userService;
+    }
+
 	
 	
-	public JwtFilter(UserService userService, JwtService jwtService) {
-		this.userService = userService;
-		this.jwtService = jwtService;
-	}
-	
-	 @Override
-	    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+	@Override
+	 protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 	        String token = null;
 	        String username = null;
 	        boolean isTokenExpired = true;
@@ -51,4 +51,7 @@ public class JwtFilter extends OncePerRequestFilter{
 	        filterChain.doFilter(request, response);
 	    }
 
-}
+	
+	}
+
+

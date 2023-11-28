@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import dev.hermyny.sa.service.RecipeService;
 
 @RestController
 @RequestMapping(path ="recipe", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class RecipeController {
 	
 	
@@ -35,12 +37,14 @@ public class RecipeController {
 	
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping(path = "create", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 	public void create(@RequestBody Recipe recipe) {
 		this.recipeService.create(recipe);
 	}
 	
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "list", produces = MediaType.APPLICATION_JSON_VALUE)
+	@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 	public List<Recipe> search() {
 		return this.recipeService.search();
 		

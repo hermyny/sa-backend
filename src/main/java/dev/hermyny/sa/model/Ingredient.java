@@ -41,12 +41,6 @@ public class Ingredient {
 	public int calorie;
 	
 	@Column
-	public int quantity;
-	
-	@Column
-	public int price;
-	
-	@Column
 	public String type;
 
 	public Ingredient() {
@@ -54,14 +48,12 @@ public class Ingredient {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ingredient(int id, List<Recipe> recipes, String name, int calorie, int quantity, int price, String type) {
+	public Ingredient(int id, List<Recipe> recipes, String name, int calorie, String type) {
 		
 		this.id = id;
 		this.recipes = recipes;
 		this.name = name;
 		this.calorie = calorie;
-		this.quantity = quantity;
-		this.price = price;
 		this.type = type;
 	}
 
@@ -97,21 +89,7 @@ public class Ingredient {
 		this.calorie = calorie;
 	}
 
-	public int getQuantity() {
-		return quantity;
-	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
 
 	public String getType() {
 		return type;
@@ -124,7 +102,7 @@ public class Ingredient {
 	@Override
 	public String toString() {
 		return "Ingredient [id=" + id + ", recipes=" + recipes + ", name=" + name + ", calorie=" + calorie
-				+ ", quantity=" + quantity + ", price=" + price + ", type=" + type + "]";
+				+  ", type=" + type + "]";
 	}
 
 	

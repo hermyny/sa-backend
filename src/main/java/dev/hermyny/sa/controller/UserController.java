@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping(path = "user" , consumes = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
 public class UserController {
 	
 	
@@ -53,6 +53,7 @@ public class UserController {
 
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping(path = "inscription", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", methods = RequestMethod.POST)
 	public void create(@RequestBody User user) {
 		this.userService.create(user);
 		System.out.println("Hello, World!");
@@ -61,6 +62,7 @@ public class UserController {
 	
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@PostMapping(path = "activation", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", methods = RequestMethod.POST)
 	public void activate(@RequestBody Map<String,String> activation) {
 		this.userService.activation(activation);
 		

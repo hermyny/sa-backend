@@ -74,8 +74,6 @@ public class IngredientService {
 		if (ingredientInBdd.getId() != ingredient.getId()) {
 			ingredientInBdd.setName(ingredient.getName());
 			ingredientInBdd.setCalorie(ingredient.getCalorie());
-			ingredientInBdd.setQuantity(ingredient.getQuantity());
-			ingredientInBdd.setPrice(ingredient.getPrice());
 			ingredientInBdd.setType(ingredient.getType());
 
 

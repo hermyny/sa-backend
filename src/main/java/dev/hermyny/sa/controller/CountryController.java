@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,6 +20,7 @@ import dev.hermyny.sa.model.Category;
 import dev.hermyny.sa.model.Country;
 import dev.hermyny.sa.service.CountryService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "country", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CountryController {
@@ -41,7 +43,7 @@ public class CountryController {
 	
 	
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "countries", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Country> search() {
 		return this.countryService.search();
 		

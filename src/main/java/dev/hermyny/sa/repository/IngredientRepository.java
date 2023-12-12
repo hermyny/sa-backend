@@ -11,5 +11,7 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Integer>
 	
 	Ingredient findByType(String type);
 	
+	Ingredient findByCalorie(int calorie);
+	
 	
 }
